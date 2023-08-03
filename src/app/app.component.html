@@ -1,0 +1,70 @@
+<h1>mat-table-filter</h1>
+<p>Provides filtering support for @angular/material tables</p>
+
+<mat-table
+  matTableFilter
+  [exampleEntity]="filterEntity"
+  [filterType]="filterType"
+  [dataSource]="dataSource"
+  [propertyOptions]="propertyOptions"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Name" [(ngModel)]="filterEntity.name" />
+        <mat-icon [matMenuTriggerFor]="menu" matSuffix>more_vert</mat-icon>
+      </mat-form-field>
+      <mat-menu #menu="matMenu">
+        <mat-checkbox
+          *ngFor="let option of options"
+          [(ngModel)]="option.selected"
+          (click)="$event.stopPropagation()"
+          >{{ option.name }}</mat-checkbox
+        >
+        <button mat-button (click)="applyFilter('name')">Filter</button>
+        <button mat-button (click)="cancel()">Cancel</button>
+      </mat-menu>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dogName">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          placeholder="Dog Name"
+          [(ngModel)]="filterEntity.dogName"
+        />
+      </mat-form-field>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.dogName }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="age">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Age" [(ngModel)]="filterEntity.age" />
+      </mat-form-field>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.age }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="isConstitutionClass">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="filterEntity.isConstitutionClass"
+        >Constitution Class</mat-checkbox
+      >
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.isConstitutionClass }}
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+<!-- Mat Menu -->
